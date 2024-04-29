@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Captura</title>
+  <style>
+    #chatbox {
+      width: 800px;
+      height: 600px;
+      border: 1px solid #ccc;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body>
+  <h1>Captura</h1>
+
+  <div id="chatbox"></div>
+
+  <input type="file" id="audioFileInput">
+  <button id="startBtn" disabled>Iniciar</button>
+  <div id="timer"></div>
+
+  <script>
+    var chatbox = document.getElementById('chatbox');
+    var audioFileInput = document.getElementById('audioFileInput');
+    var startBtn = document.getElementById('startBtn');
+    var timerElement = document.getElementById('timer');
+    var timer;
+    var audioData = null;
+
+    audioFileInput.addEventListener('input', function() {
+      var file = audioFileInput.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        audioData = e.target.result;
+        startBtn.disabled = false;
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    startBtn.addEventListener('click', function() {
+      startRecognition();
+    });
+
+    function startRecognition() {
+      if (audioData) {
+        var audio = new Audio(audioData);
+        audio.play();
+
+        recognition.start();
+        startBtn.disabled = true;
+        startTimer(20);
+      }
+    }
+
+    // Resto del código del temporizador y reconocimiento de voz...
+
+  </script>
+</body>
+</html>
